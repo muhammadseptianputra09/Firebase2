@@ -33,26 +33,30 @@ import com.google.firebase.database.FirebaseDatabase;
         private ArrayList<Teman> daftarTeman;
         private Context context;
 
-        public AdapterLihatBarang(ArrayList<Teman> daftarTeman, Context context){
+        public AdapterLihatBarang(ArrayList<Teman> daftarTeman, Context context) {
             this.daftarTeman = daftarTeman;
             this.context = context;
 
         }
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvNama;
+
             ViewHolder(View v) {
                 super(v);
                 tvNama = (TextView) v.findViewById(R.id.tv_nama);
                 database = FirebaseDatabase.getInstance().getReference();
             }
         }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout., parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_barang, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
+
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             String kode, nama, telpon;
@@ -70,7 +74,7 @@ import com.google.firebase.database.FirebaseDatabase;
                     pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()){
+                            switch (item.getItemId()) {
                                 case R.id.edit:
                                     Bundle bundle = new Bundle();
                                     bundle.putString("kunci 1", kode);
@@ -84,7 +88,7 @@ import com.google.firebase.database.FirebaseDatabase;
                                     break;
                                 case R.id.hapus:
                                     AlertDialog.Builder alertDlg = new AlertDialog.Builder(view.getContext());
-                                    alertDlg.setTitle("Yakin "+nama+" akan dihapus ?");
+                                    alertDlg.setTitle("Yakin " + nama + " akan dihapus ?");
                                     alertDlg.setMessage("Tekan Ya untuk menghapus")
                                             .setCancelable(false)
                                             .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -116,17 +120,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
         }
+
         @Override
         public int getItemCount() {
             return daftarTeman.size();
         }
 
-        public void DeleteData(String kd){
-            if (database !=null){
+        public void DeleteData(String kd) {
+            if (database != null) {
                 database.child("Teman").child(kd).removeValue();
             }
-
         }
     }
-}
 
